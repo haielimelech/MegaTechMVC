@@ -1,0 +1,61 @@
+﻿
+@model List<MegaTechMVC.Models.Entities.Location>;
+
+<h1>Locations</h1>
+
+<div class="row mb-3 mt-2">
+    <div class="col-4">
+        <form asp-action="Search" method="get">
+            <div class="input-group">
+                <input type="text" class="form-control rounded-pill" placeholder="Search by name" name="searchQuery">
+                <button type="submit" class="btn btn-primary ms-2 rounded-pill">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <label class="form-label">Order by:</label>
+        <form method="get">
+            <button type="submit" class="btn btn-primary"
+                    asp-action="List"
+                    asp-controller="Location">
+                &#x2191;
+            </button>
+            <button type="submit" class="btn btn-primary"
+                    asp-action="ListOrderBy"
+                    asp-controller="Location">
+                &#x2193;
+            </button>
+            
+        </form>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var location in Model)
+        {
+            <tr>
+                <td>@location.Name</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <a class="btn btn-primary"
+                           asp-controller="Location"
+                           asp-action="Edit"
+                           asp-route-locationName="@location.Name">Edit</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
