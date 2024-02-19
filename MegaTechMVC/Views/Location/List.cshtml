@@ -1,9 +1,14 @@
 ﻿
 @model List<MegaTechMVC.Models.Entities.Location>;
 
-<h1>Locations</h1>
 
-<div class="row mb-3 mt-2">
+<div class="header" dir="rtl">
+    <h2 class="header-item">ישובים</h2>
+    <h2 class="header-item">ממשק אדמין</h2>
+</div>
+
+@*
+<div class="row mb-3 mt-2" dir="rtl">
     <div class="col-4">
         <form asp-action="Search" method="get">
             <div class="input-group">
@@ -13,8 +18,9 @@
         </form>
     </div>
 </div>
-
-<div class="row mb-3">
+*@
+@*
+<div class="row mb-3" dir="rtl">
     <div class="col">
         <label class="form-label">Order by:</label>
         <form method="get">
@@ -28,34 +34,102 @@
                     asp-controller="Location">
                 &#x2193;
             </button>
-            
+
         </form>
     </div>
 </div>
-
-
-<table class="table">
+*@
+<table class="table table-striped" dir="rtl">
     <thead>
+        <tr class="custom-color">
+            <th>ישוב*</th>
+            <th>
+                קיימת המרה*
+            </th>
+            <th>
+                טקסט להמרה
+            </th>
+            <th>עריכה</th>
+        </tr>
         <tr>
-            <th>Name</th>
-            <th>Action</th>
+            <th colspan="1">
+               
+                    <form id="searchForm" asp-action="Search" method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control rounded-pill" name="searchQuery">
+                        </div>
+                    </form>
+             
+            </th>
+            <th>-</th>
+            <th>-</th>
+          <th>
+                <button type="submit" class="btn btn-primary ms-2" onclick="submitForm()">Search</button>
+          </th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var location in Model)
         {
             <tr>
                 <td>@location.Name</td>
+                <td>לא</td>
+                <td>-</td>
                 <td>
+                    <form method="post">
                     <div class="btn-group" role="group" aria-label="Actions">
                         <a class="btn btn-primary"
                            asp-controller="Location"
                            asp-action="Edit"
                            asp-route-locationName="@location.Name">Edit</a>
-                    </div>
+                        </div>
+                            <button type="submit" class="btn btn-danger ms-3"
+                                    asp-action="Delete"
+                                    asp-controller="Location">
+                                X
+                            </button>
+                    </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<style>
+    tr{
+        text-align:center;
+    }
+    td{
+        text-align: center;
+    }
+    th{
+        text-align: center;  
+    }
+    .custom-color {
+        background-color: rgba(77,77,77,255);
+        color: rgb(255, 255, 255); 
+        height: 60px;
+        vertical-align: middle;
+        font-size:20px;
+      
+    }
+
+    .header {
+        color: rgba(69, 124, 152, 1);
+        display:flex;
+        justify-content:space-around;
+    }
+
+    .header-item {
+        display: inline-block;
+        margin-left: 100px;
+    }
+</style>
+
+<script>
+    function submitForm(){
+        document.getElementById("searchForm").submit();
+    }
+</script>
 
